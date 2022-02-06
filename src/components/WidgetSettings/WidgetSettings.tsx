@@ -4,6 +4,7 @@ import SettingsContainer from "./SettingsContainer/SettingsContainer";
 import styled from "styled-components";
 import Button from "../common/Button/Button";
 import ObsStudioWindow from "./ObsStudioWindow";
+import { useLocation } from "react-router-dom";
 
 function WidgetSettings() {
   // Determine if the app is open in OBS
@@ -11,6 +12,8 @@ function WidgetSettings() {
   useEffect(() => {
     if (navigator.userAgent.includes("OBS/")) setIsOBS(true);
   }, []);
+
+  const location = useLocation();
 
   const [profile, setProfile] = useState("");
   const toggleProfile = () => {
@@ -59,7 +62,7 @@ function WidgetSettings() {
         <div className="flex flex-row gap-2">
           <Button>Copy</Button>
           <div className="flex items-center bg-base-light w-full rounded-md px-4 justify-center">
-            http://123
+            {location.pathname}
           </div>
         </div>
       </div>
