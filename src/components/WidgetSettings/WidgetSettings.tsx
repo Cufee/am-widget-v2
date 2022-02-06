@@ -15,12 +15,13 @@ function WidgetSettings() {
     else setProfile("");
   };
 
-  const playerId = "1013072123";
+  const playerId = "1013379500";
   const playerRealm = "NA";
 
   if (isOBS)
     return (
       <StatsWidget
+        isOBS={isOBS}
         playerId={playerId}
         playerRealm={playerRealm}
         profile={profile}
@@ -32,8 +33,9 @@ function WidgetSettings() {
       <div className="rounded bg-gray-500 p-4">
         <SettingsContainer />
       </div>
-      <div className="rounded p-4">
+      <div className="rounded">
         <StatsWidget
+          isOBS={isOBS}
           playerId={playerId}
           playerRealm={playerRealm}
           profile={profile}

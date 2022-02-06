@@ -4,15 +4,20 @@ import BlockRow from "../../types/BlockRow";
 import CardBlock from "../../types/CardBlock";
 import { blockContentStyle, blockRowStyle, blockStyle } from "./styles/block";
 import StyleFromTags from "./styles/styleFromTags";
+import PropsWithTags from "../../types/PropsWithTags";
+
+const BlockDiv = styled.div<PropsWithTags>`
+  ${blockStyle}
+  ${(p) => StyleFromTags(p.tags)}
+`;
 
 function BlockStyled({ block }: { block: CardBlock }) {
-  const BlockDiv = styled.div`
-    ${blockStyle}
-    ${StyleFromTags(block.tags)}
-  `;
-
   return (
-    <BlockDiv className="flex flex-col w-full" data-element="BlockStyled">
+    <BlockDiv
+      tags={block.tags}
+      className="flex flex-col w-full"
+      data-element="BlockStyled"
+    >
       {block.rows.map((row) => {
         return (
           <BlockRowStyled
@@ -30,8 +35,9 @@ function BlockStyled({ block }: { block: CardBlock }) {
 const BlockRowDiv = styled.div`
   ${blockRowStyle}
 `;
-const BlockContentDiv = styled.div`
+const BlockContentDiv = styled.div<PropsWithTags>`
   ${blockContentStyle}
+  ${(p) => StyleFromTags(p.tags)}
 `;
 
 function BlockRowStyled({ row }: { row: BlockRow }) {
@@ -45,6 +51,7 @@ function BlockRowStyled({ row }: { row: BlockRow }) {
 
         return (
           <BlockContentDiv
+            tags={content.tags}
             data-element="BlockRowStyled-content"
             key={`card-row-block-row-content-${Date.now()}-${
               Math.random() * Date.now()

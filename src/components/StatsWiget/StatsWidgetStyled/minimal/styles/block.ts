@@ -7,6 +7,7 @@ export const blockRowStyle: CSSObject = {
 
 export const blockContentStyle: CSSObject = {
   margin: "auto 0",
+  whiteSpace: "nowrap",
 };
 
 export const blockStyle: CSSObject = {
@@ -15,13 +16,13 @@ export const blockStyle: CSSObject = {
 };
 
 export const winrateBlockStyle: CSSObject = {
-  fontSize: "1rem",
+  fontSize: "1.35rem",
   backgroundColor: "rgba(0, 0, 0, 0.1)",
   alignItems: "center",
 };
 
 export const otherBlockStyle: CSSObject = {
-  fontSize: "0.85rem",
+  fontSize: "1.15rem",
   backgroundColor: "rgba(0, 0, 0, 0.1)",
   alignItems: "center",
   height: "90%",

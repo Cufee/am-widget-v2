@@ -3,8 +3,9 @@ import { CSSObject } from "styled-components";
 export const cardStyle: CSSObject = {
   alignItems: "center",
   padding: "0.5em",
+  color: "rgba(255, 255, 255, 1)",
 
-  backgroundColor: "rgba(0, 0, 0, 0.1)",
+  backgroundColor: "rgba(30, 30, 30, 0.8)",
   borderRadius: "0.5rem",
 };
 

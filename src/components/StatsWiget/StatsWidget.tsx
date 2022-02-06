@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import StatsResponse from "./types/StatsResponse";
 import GetPlayerStatsByID from "./common/getPlayerStats";
-
 import getStyledWidget from "./getStyledWidget";
+import styled from "styled-components";
 
 interface WidgetProps {
   playerId: string;
@@ -10,7 +10,34 @@ interface WidgetProps {
   profile: string;
   locale?: string;
   settingsId?: string;
+
+  isOBS?: boolean;
 }
+
+interface WidgetStyleProps {
+  backgroundImage?: string;
+  blur?: string;
+  isOBS?: boolean;
+}
+
+const StatsWidgetDiv = styled.div<WidgetStyleProps>`
+  max-width: fit-content;
+
+  ${(p) =>
+    p.backgroundImage &&
+    !p.isOBS &&
+    `
+    background-image: ${p.backgroundImage};
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+
+
+    background-color: rgba(255, 255, 255, .5);
+    -webkit-backdrop-filter: blur(10em);
+    backdrop-filter: blur(10em);
+  `};
+`;
 
 function StatsWidget(props: WidgetProps) {
   const [stats, setStats] = useState<StatsResponse | null>(null);
@@ -25,24 +52,17 @@ function StatsWidget(props: WidgetProps) {
     );
   }, [props.playerId, props.playerRealm, props.profile]);
 
-  if (!stats) {
-    return <div>Loading...</div>;
-  }
-  if (!stats.cards) {
-    return <div>No stats</div>;
-  }
-
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
+  if (isLoading) return <div>Loading...</div>;
+  if (!stats || !stats.cards) return <div>No stats</div>;
   return (
-    <div>
-      <div className="absolute text-4xl opacity-10">PREVIEW</div>
+    <StatsWidgetDiv
+      isOBS={props.isOBS}
+      backgroundImage='url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRX-EUGZcFtTpCq6UHE8UUzB-Unfxd0xrz7oQ")'
+    >
       {getStyledWidget({ profile: props.profile })({
         cards: stats.cards,
-        width: "700px",
       })}
-    </div>
+    </StatsWidgetDiv>
   );
 }
 

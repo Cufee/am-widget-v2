@@ -4,15 +4,20 @@ import styled from "styled-components";
 import Card from "../../types/Card";
 import CardRow from "../../types/CardRow";
 import StyleFromTags from "./styles/styleFromTags";
+import PropsWithTags from "../../types/PropsWithTags";
+
+const CardDiv = styled.div<PropsWithTags>`
+  ${cardStyle}
+  ${(p) => StyleFromTags(p.tags)}
+`;
 
 function CardStyled({ card }: { card: Card }) {
-  const CardDiv = styled.div`
-    ${cardStyle}
-    ${StyleFromTags(card.tags)}
-  `;
-
   return (
-    <CardDiv className="flex flex-col w-full" data-element="CardStyled">
+    <CardDiv
+      tags={card.tags}
+      className="flex flex-col w-full"
+      data-element="CardStyled"
+    >
       {card.rows.map((row) => {
         return (
           <CardRowStyled

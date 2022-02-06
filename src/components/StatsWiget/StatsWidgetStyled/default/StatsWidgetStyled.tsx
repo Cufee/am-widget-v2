@@ -1,24 +1,26 @@
 import Card from "../../types/Card";
 import CardStyled from "./CardStyled";
+import styled from "styled-components";
 
-import { cardStyle } from "./styles/card";
+const StatsWidgetDiv = styled.div`
+  padding: 1rem;
+`;
 
-function StatsWidgetStyled({ cards, width }: { cards: Card[]; width: string }) {
+function StatsWidgetStyled({ cards }: { cards: Card[] }) {
   return (
-    <div
-      style={{ maxWidth: width, width: "fit-content" }}
+    <StatsWidgetDiv
       className={`flex flex-col gap-1`}
       data-element="StatsWidgetStyled"
     >
       {cards.map((card) => {
         return (
           <CardStyled
-            card={{ ...card, ...cardStyle }}
+            card={card}
             key={`card-${Date.now()}-${Math.random() * Date.now()}`}
           />
         );
       })}
-    </div>
+    </StatsWidgetDiv>
   );
 }
 

@@ -1,17 +1,23 @@
 import BlockRow from "../../types/BlockRow";
 
-import { blockContentStyle, blockRowStyle } from "./styles/block";
+import { blockContentStyle, blockRowStyle, blockStyle } from "./styles/block";
 import StyleFromTags from "./styles/styleFromTags";
 import styled from "styled-components";
 import CardBlock from "../../types/CardBlock";
+import PropsWithTags from "../../types/PropsWithTags";
+
+const BlockDiv = styled.div<PropsWithTags>`
+${blockStyle}
+${(p) => StyleFromTags(p.tags)}}
+`;
 
 function BlockStyled({ block }: { block: CardBlock }) {
-  const BlockDiv = styled.div`
-    ${StyleFromTags(block.tags)}}
-  `;
-
   return (
-    <BlockDiv className="flex flex-col w-full" data-element="BlockStyled">
+    <BlockDiv
+      tags={block.tags}
+      className="flex flex-col w-full"
+      data-element="BlockStyled"
+    >
       {block.rows.map((row) => {
         return (
           <BlockRowStyled
@@ -29,16 +35,15 @@ function BlockStyled({ block }: { block: CardBlock }) {
 const BlockRowDiv = styled.div`
   ${blockRowStyle}
 `;
+const ContentDiv = styled.div<PropsWithTags>`
+  ${blockContentStyle}
+  ${(p) => StyleFromTags(p.tags)}
+`;
 
 function BlockRowStyled({ row }: { row: BlockRow }) {
   return (
     <BlockRowDiv className="flex flex-row w-full" data-element="BlockRowStyled">
       {row.content.map((content) => {
-        const ContentDiv = styled.div`
-          ${blockContentStyle}
-          ${StyleFromTags(content.tags)}
-        `;
-
         let body = content.content;
         if (content.isLocalized) {
           body = "label";
@@ -46,6 +51,7 @@ function BlockRowStyled({ row }: { row: BlockRow }) {
 
         return (
           <ContentDiv
+            tags={content.tags}
             data-element="BlockRowStyled-content"
             key={`card-row-block-row-content-${Date.now()}-${
               Math.random() * Date.now()

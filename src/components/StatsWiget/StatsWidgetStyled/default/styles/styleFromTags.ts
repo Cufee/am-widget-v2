@@ -1,6 +1,12 @@
 import { CSSObject } from "styled-components";
-import { textLargeStyle, textMediumStyle, textSmallStyle } from "./block";
-import { playerClanStyle, playerNameStyle } from "./custom";
+
+import {
+  playerClanStyle,
+  playerNameStyle,
+  textLargeStyle,
+  textMediumStyle,
+  textSmallStyle,
+} from "./text";
 
 export default function StyleFromTags(tags: string[]): CSSObject {
   if (!tags || tags.length === 0) {
