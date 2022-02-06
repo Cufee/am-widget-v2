@@ -12,10 +12,12 @@ interface WidgetProps {
   settingsId?: string;
 
   isOBS?: boolean;
+  withBackground?: boolean;
 }
 
 interface WidgetStyleProps {
   backgroundImage?: string;
+  withBackground?: boolean;
   blur?: string;
   isOBS?: boolean;
 }
@@ -25,6 +27,7 @@ const StatsWidgetDiv = styled.div<WidgetStyleProps>`
 
   ${(p) =>
     p.backgroundImage &&
+    p.withBackground &&
     !p.isOBS &&
     `
     background-image: ${p.backgroundImage};
@@ -36,7 +39,7 @@ const StatsWidgetDiv = styled.div<WidgetStyleProps>`
     background-color: rgba(255, 255, 255, .5);
     -webkit-backdrop-filter: blur(10em);
     backdrop-filter: blur(10em);
-  `};
+  `}
 `;
 
 function StatsWidget(props: WidgetProps) {
@@ -58,6 +61,7 @@ function StatsWidget(props: WidgetProps) {
     <StatsWidgetDiv
       isOBS={props.isOBS}
       backgroundImage='url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRX-EUGZcFtTpCq6UHE8UUzB-Unfxd0xrz7oQ")'
+      withBackground={props.withBackground}
     >
       {getStyledWidget({ profile: props.profile })({
         cards: stats.cards,

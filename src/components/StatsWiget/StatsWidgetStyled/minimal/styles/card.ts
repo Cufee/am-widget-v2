@@ -4,7 +4,7 @@ export const cardStyle: CSSObject = {
   alignItems: "center",
   padding: "0.25em 0.25em",
 
-  backgroundColor: "rgba(0, 0, 0, 0.1)",
+  backgroundColor: "rgba(0, 0, 0, 0.4)",
   borderRadius: "0.5rem",
 };
 
