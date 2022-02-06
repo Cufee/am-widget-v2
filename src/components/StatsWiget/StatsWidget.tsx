@@ -14,10 +14,13 @@ interface WidgetProps {
 
 function StatsWidget(props: WidgetProps) {
   const [stats, setStats] = useState<StatsResponse | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
   useEffect(() => {
+    setIsLoading(true);
     GetPlayerStatsByID(props.playerId, props.playerRealm, props.profile).then(
       (stats) => {
         setStats(stats || {});
+        setIsLoading(false);
       }
     );
   }, [props.playerId, props.playerRealm, props.profile]);
@@ -29,6 +32,9 @@ function StatsWidget(props: WidgetProps) {
     return <div>No stats</div>;
   }
 
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
   return (
     <div>
       <div className="absolute text-4xl opacity-10">PREVIEW</div>

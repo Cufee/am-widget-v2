@@ -1,14 +1,9 @@
+import Card from "../../types/Card";
 import CardStyled from "./CardStyled";
-import { StatsCard } from "../../types/StatsCards/StatsCard";
+
 import { cardStyle } from "./styles/card";
 
-function StatsWidgetStyled({
-  cards,
-  width,
-}: {
-  cards: StatsCard[];
-  width: string;
-}) {
+function StatsWidgetStyled({ cards, width }: { cards: Card[]; width: string }) {
   return (
     <div
       style={{ maxWidth: width, width: "fit-content" }}

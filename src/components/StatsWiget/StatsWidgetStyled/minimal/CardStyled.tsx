@@ -1,24 +1,19 @@
-import Card from "../../types/StyledCards/Card";
-import CardRow from "../../types/StyledCards/CardRow";
 import BlockStyled from "./BlockStyled";
 import StyleFromTags from "./styles/styleFromTags";
 import styled from "styled-components";
-import { minimalCardRowStyle, minimalCardStyle } from "./styles/card";
+import { cardRowStyle, cardStyle } from "./styles/card";
+import CardRow from "../../types/CardRow";
+import Card from "../../types/Card";
 
 function CardStyled({ card }: { card: Card }) {
-  const style = {
-    ...card.style,
-    ...minimalCardStyle,
-    ...StyleFromTags(card.tags),
-  };
+  const CardDiv = styled.div`
+    ${cardStyle}
+    ${StyleFromTags(card.tags)}
+  `;
 
   return (
-    <div
-      className="flex flex-col w-full"
-      data-element="CardStyled"
-      style={style}
-    >
-      {card.rows.map((row) => {
+    <CardDiv className="flex flex-col w-full" data-element="CardStyled">
+      {card.rows.map((row: CardRow) => {
         return (
           <CardRowStyled
             row={row}
@@ -26,18 +21,19 @@ function CardStyled({ card }: { card: Card }) {
           />
         );
       })}
-    </div>
+    </CardDiv>
   );
 }
 
-function CardRowStyled({ row }: { row: CardRow }) {
-  const style = { ...row.style, ...minimalCardRowStyle };
+const CardRowDiv = styled.div`
+  ${cardRowStyle}
+`;
 
+function CardRowStyled({ row }: { row: CardRow }) {
   return (
-    <div
+    <CardRowDiv
       className="flex flex-row w-full gap-1"
       data-element="CardRowStyled"
-      style={style}
     >
       {row.blocks.map((block) => {
         return (
@@ -47,7 +43,7 @@ function CardRowStyled({ row }: { row: CardRow }) {
           />
         );
       })}
-    </div>
+    </CardRowDiv>
   );
 }
 

@@ -1,6 +1,6 @@
 import { CSSObject } from "styled-components";
-import { minimalTextSmallStyle } from "./block";
-import { minimalOtherBlocksStyle, minimalWinrateBlockStyle } from "./custom";
+import { otherBlockStyle, winrateBlockStyle } from "./block";
+import { textSmallStyle } from "./text";
 
 export default function StyleFromTags(tags: string[]): CSSObject {
   if (!tags || tags.length === 0) {
@@ -10,16 +10,16 @@ export default function StyleFromTags(tags: string[]): CSSObject {
 
   // Blocks
   if (tags.includes("label")) {
-    style = { ...style, ...minimalTextSmallStyle };
+    style = { ...style, ...textSmallStyle };
   }
   if (tags.includes("blockwinrate")) {
-    style = { ...style, ...minimalWinrateBlockStyle };
+    style = { ...style, ...winrateBlockStyle };
   }
   if (tags.includes("blockbattles")) {
-    style = { ...style, ...minimalOtherBlocksStyle };
+    style = { ...style, ...otherBlockStyle };
   }
   if (tags.includes("blockaverage_damage")) {
-    style = { ...style, ...minimalOtherBlocksStyle };
+    style = { ...style, ...otherBlockStyle };
   }
 
   return style;

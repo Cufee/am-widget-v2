@@ -1,18 +1,17 @@
-import BlockRow from "../../types/StyledCards/BlockRow";
-import CardBlock from "../../types/StyledCards/CardBlock";
+import BlockRow from "../../types/BlockRow";
+
 import { blockContentStyle, blockRowStyle } from "./styles/block";
 import StyleFromTags from "./styles/styleFromTags";
 import styled from "styled-components";
+import CardBlock from "../../types/CardBlock";
 
 function BlockStyled({ block }: { block: CardBlock }) {
-  const style = { ...block.style };
+  const BlockDiv = styled.div`
+    ${StyleFromTags(block.tags)}}
+  `;
 
   return (
-    <div
-      className="flex flex-col w-full"
-      data-element="BlockStyled"
-      style={style}
-    >
+    <BlockDiv className="flex flex-col w-full" data-element="BlockStyled">
       {block.rows.map((row) => {
         return (
           <BlockRowStyled
@@ -23,21 +22,22 @@ function BlockStyled({ block }: { block: CardBlock }) {
           />
         );
       })}
-    </div>
+    </BlockDiv>
   );
 }
 
-function BlockRowStyled({ row }: { row: BlockRow }) {
-  const style = { ...row.style, ...blockRowStyle };
+const BlockRowDiv = styled.div`
+  ${blockRowStyle}
+`;
 
+function BlockRowStyled({ row }: { row: BlockRow }) {
   return (
-    <div
-      className="flex flex-row w-full"
-      data-element="BlockRowStyled"
-      style={style}
-    >
+    <BlockRowDiv className="flex flex-row w-full" data-element="BlockRowStyled">
       {row.content.map((content) => {
-        const style = { ...blockContentStyle, ...StyleFromTags(content.tags) };
+        const ContentDiv = styled.div`
+          ${blockContentStyle}
+          ${StyleFromTags(content.tags)}
+        `;
 
         let body = content.content;
         if (content.isLocalized) {
@@ -45,17 +45,17 @@ function BlockRowStyled({ row }: { row: BlockRow }) {
         }
 
         return (
-          <div
+          <ContentDiv
             data-element="BlockRowStyled-content"
             key={`card-row-block-row-content-${Date.now()}-${
               Math.random() * Date.now()
             }`}
           >
             {body}
-          </div>
+          </ContentDiv>
         );
       })}
-    </div>
+    </BlockRowDiv>
   );
 }
 

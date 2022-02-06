@@ -1,8 +1,8 @@
-import { StatsCard } from "./StatsCards/StatsCard";
-import BlockRowContent from "./StyledCards/BlockRowContent";
+import BlockRowContent from "./BlockRowContent";
+import Card from "./Card";
 
 export default interface StatsResponse {
-  cards?: StatsCard[];
+  cards?: Card[];
   status_icons?: BlockRowContent[];
   failed_cards?: string[];
 }

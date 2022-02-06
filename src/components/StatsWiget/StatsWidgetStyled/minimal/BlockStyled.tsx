@@ -1,18 +1,18 @@
-import BlockRow from "../../types/StyledCards/BlockRow";
-import CardBlock from "../../types/StyledCards/CardBlock";
-import { minimalBlockContentStyle, minimalBlockRowStyle } from "./styles/block";
-import StyleFromTags from "./styles/styleFromTags";
 import styled from "styled-components";
 
+import BlockRow from "../../types/BlockRow";
+import CardBlock from "../../types/CardBlock";
+import { blockContentStyle, blockRowStyle, blockStyle } from "./styles/block";
+import StyleFromTags from "./styles/styleFromTags";
+
 function BlockStyled({ block }: { block: CardBlock }) {
-  const style = { ...StyleFromTags(block.tags) };
+  const BlockDiv = styled.div`
+    ${blockStyle}
+    ${StyleFromTags(block.tags)}
+  `;
 
   return (
-    <div
-      className="flex flex-col w-full"
-      data-element="BlockStyled"
-      style={style}
-    >
+    <BlockDiv className="flex flex-col w-full" data-element="BlockStyled">
       {block.rows.map((row) => {
         return (
           <BlockRowStyled
@@ -23,43 +23,38 @@ function BlockStyled({ block }: { block: CardBlock }) {
           />
         );
       })}
-    </div>
+    </BlockDiv>
   );
 }
 
+const BlockRowDiv = styled.div`
+  ${blockRowStyle}
+`;
+const BlockContentDiv = styled.div`
+  ${blockContentStyle}
+`;
+
 function BlockRowStyled({ row }: { row: BlockRow }) {
-  const style = { ...row.style, ...minimalBlockRowStyle };
-
   return (
-    <style
-      className="flex flex-row w-full"
-      data-element="BlockRowStyled"
-      style={style}
-    >
+    <BlockRowDiv className="flex flex-row w-full" data-element="BlockRowStyled">
       {row.content.map((content) => {
-        const style = {
-          ...minimalBlockContentStyle,
-          ...StyleFromTags(content.tags),
-        };
-
         let body = content.content;
         if (content.isLocalized) {
           // do something
         }
 
         return (
-          <div
-            style={style}
+          <BlockContentDiv
             data-element="BlockRowStyled-content"
             key={`card-row-block-row-content-${Date.now()}-${
               Math.random() * Date.now()
             }`}
           >
             {body}
-          </div>
+          </BlockContentDiv>
         );
       })}
-    </style>
+    </BlockRowDiv>
   );
 }
 

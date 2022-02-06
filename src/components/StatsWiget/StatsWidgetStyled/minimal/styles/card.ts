@@ -1,6 +1,6 @@
 import { CSSObject } from "styled-components";
 
-export const minimalCardStyle: CSSObject = {
+export const cardStyle: CSSObject = {
   alignItems: "center",
   padding: "0.25em 0.25em",
 
@@ -8,7 +8,7 @@ export const minimalCardStyle: CSSObject = {
   borderRadius: "0.5rem",
 };
 
-export const minimalCardRowStyle: CSSObject = {
+export const cardRowStyle: CSSObject = {
   justifyContent: "space-between",
   alignItems: "center",
 };

@@ -1,12 +1,13 @@
-import StatsWidgetStyled from "./StatsWidgetStyled/minimal/StatsWidgetStyled";
+import minimalProfile from "./StatsWidgetStyled/minimal/StatsWidgetStyled";
+import defaultProfile from "./StatsWidgetStyled/default/StatsWidgetStyled";
 
 function getStyledWidget({ profile }: { profile: string }) {
   switch (profile) {
     case "minimal":
-      return StatsWidgetStyled;
+      return minimalProfile;
 
     default:
-      return StatsWidgetStyled;
+      return defaultProfile;
   }
 }
 
