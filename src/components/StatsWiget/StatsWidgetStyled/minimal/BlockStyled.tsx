@@ -5,6 +5,7 @@ import CardBlock from "../../types/CardBlock";
 import { blockContentStyle, blockRowStyle, blockStyle } from "./styles/block";
 import StyleFromTags from "./styles/styleFromTags";
 import PropsWithTags from "../../types/PropsWithTags";
+import ContentToElement from "../../common/ContentToElement";
 
 const BlockDiv = styled.div<PropsWithTags>`
   ${blockStyle}
@@ -44,11 +45,6 @@ function BlockRowStyled({ row }: { row: BlockRow }) {
   return (
     <BlockRowDiv className="flex flex-row w-full" data-element="BlockRowStyled">
       {row.content.map((content) => {
-        let body = content.content;
-        if (content.isLocalized) {
-          // do something
-        }
-
         return (
           <BlockContentDiv
             tags={content.tags}
@@ -57,7 +53,7 @@ function BlockRowStyled({ row }: { row: BlockRow }) {
               Math.random() * Date.now()
             }`}
           >
-            {body}
+            <ContentToElement content={content} />
           </BlockContentDiv>
         );
       })}

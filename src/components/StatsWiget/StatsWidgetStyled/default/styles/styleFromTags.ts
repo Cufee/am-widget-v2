@@ -21,6 +21,7 @@ export default function StyleFromTags(tags: string[]): CSSObject {
   }
   if (
     tags.includes("alltime") ||
+    tags.includes("overview_title") ||
     tags.includes("winrate_with_battles_battles")
   ) {
     style = { ...style, ...textMediumStyle };
@@ -32,6 +33,9 @@ export default function StyleFromTags(tags: string[]): CSSObject {
   // Vehicles
   if (tags.includes("vehicleTier")) {
     style = { ...style, ...textSmallStyle };
+  }
+  if (tags.includes("vehicleName")) {
+    style = { ...style, ...textMediumStyle };
   }
 
   // Player Name

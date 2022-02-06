@@ -7,6 +7,7 @@ export const blockRowStyle: CSSObject = {
 
 export const blockStyle: CSSObject = {
   margin: "auto 0",
+  gap: "0.25em",
 };
 
 export const blockContentStyle: CSSObject = {

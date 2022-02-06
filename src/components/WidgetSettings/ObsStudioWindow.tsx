@@ -3,12 +3,12 @@ import { PropsWithChildren } from "react";
 function ObsStudioWindow({ children }: PropsWithChildren<{}>) {
   return (
     <div
-      className="h-full flex flex-col items-center bg-gray-700 m-2 rounded-md overflow-hidden relative"
+      className="h-full flex flex-col items-center bg-gray-700 rounded-md overflow-hidden relative select-none pointer-events-none"
       style={{ width: "30rem" }}
     >
       {/* Title Bar */}
       <div className="w-full h-6 items-center bg-gray-900 text-gray-700 text-center text-sm flex flex-row justify-center relative z-10">
-        <div className="absolute flex flex-row left-1 top-2 gap-1">
+        <div className="absolute flex flex-row left-2 top-1/3 gap-1">
           <div className="bg-base-light w-2 h-2 rounded-full"></div>
           <div className="bg-base-light w-2 h-2 rounded-full"></div>
           <div className="bg-base-light w-2 h-2 rounded-full"></div>
@@ -50,7 +50,8 @@ function ObsStudioWindow({ children }: PropsWithChildren<{}>) {
       </div>
 
       {/* Background Alteration */}
-      <div className="w-1/2 h-full absolute bg-gray-300 z-0 right-0" />
+      <div className="w-1/3 h-full absolute bg-gray-300 z-0 right-1/3" />
+      <div className="w-1/3 h-full absolute bg-gray-900 z-0 right-2/3" />
     </div>
   );
 }

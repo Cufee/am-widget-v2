@@ -1,9 +1,10 @@
 import StatsResponse from "../types/StatsResponse";
 
 export default async function GetPlayerStatsByID(
+  settingsId: string,
   playerID: string,
   realm: string,
-  profile: string
+  locale: string = "en_US"
 ): Promise<StatsResponse> {
   const playerIDNumber = Number(playerID);
   if (isNaN(playerIDNumber)) {
@@ -17,8 +18,9 @@ export default async function GetPlayerStatsByID(
     },
     body: JSON.stringify({
       player_id: playerIDNumber,
+      settings_id: settingsId,
+      locale,
       realm,
-      profile,
     }),
   });
 

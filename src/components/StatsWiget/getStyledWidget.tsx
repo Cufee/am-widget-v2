@@ -1,8 +1,8 @@
 import minimalProfile from "./StatsWidgetStyled/minimal/StatsWidgetStyled";
 import defaultProfile from "./StatsWidgetStyled/default/StatsWidgetStyled";
 
-function getStyledWidget({ profile }: { profile: string }) {
-  switch (profile) {
+function getStyledWidget({ styleProfile }: { styleProfile: string }) {
+  switch (styleProfile) {
     case "minimal":
       return minimalProfile;
 

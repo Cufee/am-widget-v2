@@ -1,7 +1,7 @@
 import Card from "../../types/Card";
 import CardStyled from "./CardStyled";
 
-function StatsWidgetStyled({ cards }: { cards: Card[]; width?: string }) {
+function StatsWidgetStyled({ cards }: { cards: Card[] }) {
   return (
     <div className={`flex flex-col gap-1`} data-element="StatsWidgetStyled">
       {cards.map((card) => {

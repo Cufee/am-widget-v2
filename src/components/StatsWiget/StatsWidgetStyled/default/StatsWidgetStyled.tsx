@@ -2,9 +2,7 @@ import Card from "../../types/Card";
 import CardStyled from "./CardStyled";
 import styled from "styled-components";
 
-const StatsWidgetDiv = styled.div`
-  padding: 1rem;
-`;
+const StatsWidgetDiv = styled.div``;
 
 function StatsWidgetStyled({ cards }: { cards: Card[] }) {
   return (
