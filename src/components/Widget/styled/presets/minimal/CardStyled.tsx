@@ -50,6 +50,7 @@ function CardRowStyled({ row }: { row: CardRow }) {
     >
       {row.blocks.map((block, i) => {
         if (middle.includes(i)) {
+          if (!block.tags) block.tags = [];
           block.tags.push("highlight");
         }
         return (

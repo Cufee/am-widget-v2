@@ -11,15 +11,19 @@ import Widget from "./components/pages/Widget/Widget";
 import Landing from "./components/pages/Landing/Landing";
 import NotFound from "./components/pages/NotFound/NotFound";
 import PageContainer from "./components/core/PageContainer/PageContainer";
+import { StatsContextWrapper } from "./components/contexts/StatsContext/StatsContext";
+import Headless from "./components/Widget/Headless/Headless";
 
 function App() {
   return (
     <BrowserRouter>
-      <SettingsContextWrapper>
-        <div className="flex flex-col justify-center items-center relative">
-          <PageWrapper />
-        </div>
-      </SettingsContextWrapper>
+      <StatsContextWrapper>
+        <SettingsContextWrapper>
+          <div className="flex flex-col justify-center items-center relative">
+            <PageWrapper />
+          </div>
+        </SettingsContextWrapper>
+      </StatsContextWrapper>
     </BrowserRouter>
   );
 }
@@ -41,6 +45,7 @@ function PageContent() {
     <Routes>
       <Route path="/" element={<Landing />} />
       <Route path="/widget" element={<Widget />} />
+      <Route path="/widget/headless" element={<Headless />} />
       <Route path="*" element={<NotFound />} />
     </Routes>
   );

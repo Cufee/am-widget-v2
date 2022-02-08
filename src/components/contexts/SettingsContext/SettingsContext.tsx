@@ -1,4 +1,4 @@
-import { createContext, PropsWithChildren, useState } from "react";
+import { createContext, PropsWithChildren, useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import getSettingsById from "../../api/settings/getSettingsById";
 import newSettings from "../../api/settings/newSettings";
@@ -30,7 +30,7 @@ export const SettingsContextWrapper = ({ children }: PropsWithChildren<{}>) => {
         });
       } else {
         newSettings(updated).then((id) => {
-          setSettingsIdSimple(id);
+          setSettingsId(id);
         });
       }
     }
@@ -45,11 +45,18 @@ export const SettingsContextWrapper = ({ children }: PropsWithChildren<{}>) => {
     window.history.pushState({}, "", `?${search.toString()}`);
 
     if (settingsId !== newSettingsId) {
-      getSettingsById(settingsId).then((settings) => {
+      getSettingsById(newSettingsId).then((settings) => {
         setSettingsSimple(settings);
       });
     }
   };
+  useEffect(() => {
+    const search = new URLSearchParams(location.search);
+    const queryId = search.get("settingsId");
+    if (queryId) {
+      setSettingsId(queryId);
+    }
+  }, []);
 
   return (
     <SettingsContext.Provider

@@ -5,14 +5,15 @@ import { GenerateSettings } from "../../api/settings/types/GenerateSettings";
 // Contexts
 import { SettingsContext } from "../../contexts/SettingsContext/SettingsContext";
 // Components
-import { localeOptions, realmOptions } from "./core/constants/settings";
-import presets from "../styled/presets/presets";
 import Button from "../../core/Button/Button";
 
 function SettingsContainer() {
   const { settings, setSettings } = useContext(SettingsContext);
   const [settingsChanged, setSettingsChanged] =
     useState<GenerateSettings>(settings);
+  useEffect(() => {
+    setSettingsChanged(settings);
+  }, [settings]);
 
   const setSettingsKey = (update: Partial<GenerateSettings>) => {
     setSettingsChanged({ ...settingsChanged, ...update });
@@ -24,58 +25,33 @@ function SettingsContainer() {
     }
   };
 
-  const [realmValid, setRealmValid] = useState(
-    realmOptions.includes(settings?.player?.realm?.toUpperCase())
-  );
   const setRealm = (realm: string) => {
     setSettingsKey({
       player: { ...settingsChanged?.player, realm: realm.toUpperCase() },
     });
-
-    if (realmOptions.includes(realm.toUpperCase())) {
-      setRealmValid(true);
-    } else setRealmValid(false);
   };
 
-  const [localeValid, setLocaleValid] = useState(
-    localeOptions.includes(settings?.options?.locale?.toLowerCase())
-  );
   const setLocale = (locale: string) => {
     setSettingsKey({
-      options: { ...settingsChanged?.options, locale: locale.toUpperCase() },
+      locale: locale.toLowerCase(),
+      options: { ...settingsChanged?.options, locale: locale.toLowerCase() },
     });
-
-    if (localeOptions.includes(locale.toUpperCase())) {
-      setLocaleValid(true);
-    } else setLocaleValid(false);
   };
 
-  const [presetValid, setPresetValid] = useState(
-    presets.map((p) => p.key).includes(settings?.stylePreset)
-  );
   const setStylePreset = (preset: string) => {
     setSettingsKey({
       stylePreset: preset.toLowerCase(),
     });
-
-    if (presets.map((p) => p.key).includes(preset.toLowerCase())) {
-      setPresetValid(true);
-    } else setPresetValid(false);
   };
 
   const [canSave, setCanSave] = useState(false);
   useEffect(() => {
-    if (
-      settingsChanged !== settings &&
-      presetValid &&
-      realmValid &&
-      localeValid
-    ) {
+    if (JSON.stringify(settingsChanged) !== JSON.stringify(settings)) {
       setCanSave(true);
     } else {
       setCanSave(false);
     }
-  }, [settingsChanged, presetValid, realmValid, localeValid, settings]);
+  }, [settingsChanged, settings]);
 
   return (
     <div className="flex flex-col gap-2 p-4 h-full">
@@ -114,9 +90,7 @@ function SettingsContainer() {
           </div>
           <div className="flex bg-base-light rounded-md rounded-l-none flex-grow justify-center overflow-hidden">
             <input
-              className={`p-2 bg-base-light w-full text-center ${
-                realmValid ? "" : "border-red-500 border-2"
-              }`}
+              className={`p-2 bg-base-light w-full text-center`}
               value={settingsChanged?.player?.realm || ""}
               onChange={(e) => setRealm(e.target.value.toString())}
             />
@@ -129,9 +103,7 @@ function SettingsContainer() {
           </div>
           <div className="flex bg-base-light rounded-md rounded-l-none flex-grow justify-center overflow-hidden">
             <input
-              className={`p-2 bg-base-light w-full text-center ${
-                localeValid ? "" : "border-red-500 border-2"
-              }`}
+              className={`p-2 bg-base-light w-full text-center`}
               value={settingsChanged?.options?.locale || ""}
               onChange={(e) => setLocale(e.target.value.toString())}
             />
@@ -146,9 +118,7 @@ function SettingsContainer() {
           </div>
           <div className="flex bg-base-light rounded-md rounded-l-none flex-grow justify-center overflow-hidden">
             <input
-              className={`p-2 bg-base-light w-full text-center ${
-                presetValid ? "" : "border-red-500 border-2"
-              }`}
+              className={`p-2 bg-base-light w-full text-center`}
               value={settingsChanged?.stylePreset || ""}
               onChange={(e) => setStylePreset(e.target.value.toString())}
             />

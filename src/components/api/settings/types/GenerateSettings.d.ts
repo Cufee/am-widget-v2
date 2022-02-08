@@ -2,58 +2,57 @@ export interface GenerateSettings {
   player: Player;
   locale: string;
   stylePreset: string;
-
   options: Options;
   lastUsed: string;
 }
 export interface Options {
   locale: string;
-  Player: PlayerOptions;
-  AccountStatus: AccountStatusOptions;
-  Notifications: NotificationsOptions;
-  Challenges: ChallengesOptions;
-  RatingBattles: OverViewOptions;
-  RegularBattles: OverViewOptions;
-  VehiclesFull: VehiclesOptions;
-  VehiclesSlim: VehiclesOptions;
+  player: PlayerOptions;
+  accountStatus: AccountStatusOptions;
+  notifications: NotificationsOptions;
+  challenges: ChallengesOptions;
+  ratingBattles: OverViewOptions;
+  regularBattles: OverViewOptions;
+  vehiclesFull: VehiclesOptions;
+  vehiclesSlim: VehiclesOptions;
 }
 export interface AccountStatusOptions {
-  Include: boolean;
-  Limit: number;
+  include: boolean;
+  limit: number;
 }
 export interface NotificationsOptions {
-  Include: boolean;
-  Blocks?: null;
+  include: boolean;
+  blocks?: null;
 }
 export interface ChallengesOptions {
-  Include: boolean;
-  Limit: number;
-  Blocks?: null;
-  Types?: null;
+  include: boolean;
+  limit: number;
+  blocks?: null;
+  types?: null;
 }
 export interface PlayerOptions {
-  Include: boolean;
-  WithName: boolean;
-  WithClanTag: boolean;
-  WithPins: boolean;
+  include: boolean;
+  withName: boolean;
+  withClanTag: boolean;
+  withPins: boolean;
 }
 export interface OverViewOptions {
-  Include: boolean;
-  WithTitle: boolean;
-  WithLabels: boolean;
-  WithAllTimeStats: boolean;
-  Blocks?: string[] | null;
-  Type: string;
+  include: boolean;
+  withTitle: boolean;
+  withLabels: boolean;
+  withAllTimeStats: boolean;
+  blocks?: string[] | null;
+  type: string;
 }
 export interface VehiclesOptions {
-  Include: boolean;
-  Limit: number;
-  WithVehicleTier: boolean;
-  WithVehicleName: boolean;
-  WithAllTimeStats: boolean;
-  WithLabels: boolean;
-  Offset: number;
-  Blocks?: string[] | null;
+  include: boolean;
+  limit: number;
+  withVehicleTier: boolean;
+  withVehicleName: boolean;
+  withAllTimeStats: boolean;
+  withLabels: boolean;
+  offset: number;
+  blocks?: string[] | null;
 }
 
 export interface Player {
