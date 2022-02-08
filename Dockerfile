@@ -2,13 +2,13 @@ FROM node:16-alpine
 
 # install dependencies
 WORKDIR /app
-COPY package.json package-lock.json ./
-RUN npm ci
+COPY package.json yarn.lock ./
+RUN yarn
 
 # Copy all local files into the image.
-COPY . .
+COPY . ./
+RUN yarn build
 
-RUN npm run build
 
 FROM node:16-slim
 
