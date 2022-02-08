@@ -1,21 +1,48 @@
+// Libraries
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import NotFound from "./components/NotFound";
-import WidgetSettings from "./components/WidgetSettings/WidgetSettings";
+// Hooks
+import { useDetectHeadless } from "./components/hooks/useDetectHeadless/useDetectHeadless";
+// Contexts
+import { SettingsIdWrapper } from "./components/contexts/SettingsIdContext/SettingsIdContext";
+// Components
+import Footer from "./components/core/Footer/Footer";
+import Navbar from "./components/core/Navbar/Navbar";
+import Widget from "./components/pages/Widget/Widget";
+import Landing from "./components/pages/Landing/Landing";
+import NotFound from "./components/pages/NotFound/NotFound";
+import PageContainer from "./components/core/PageContainer/PageContainer";
 
 function App() {
   return (
-    <div className="App">
-      <BrowserRouter>
-        <div className="flex justify-center uppercase opacity-25 text-2xl absolute top-0 left-2 origin-center">
-          beta
-        </div>
-        <Routes>
-          <Route path="/" element={<WidgetSettings />} />
-          <Route path="/widget" element={<WidgetSettings />} />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </BrowserRouter>
+    <div className="flex flex-col justify-center items-center relative">
+      <SettingsIdWrapper>
+        <BrowserRouter>
+          <PageWrapper />
+        </BrowserRouter>
+      </SettingsIdWrapper>
     </div>
+  );
+}
+
+function PageWrapper() {
+  const headless = useDetectHeadless();
+  if (headless) return <PageContent />;
+  return (
+    <PageContainer>
+      <Navbar />
+      <PageContent />
+      <Footer />
+    </PageContainer>
+  );
+}
+
+function PageContent() {
+  return (
+    <Routes>
+      <Route path="/" element={<Landing />} />
+      <Route path="/widget" element={<Widget />} />
+      <Route path="*" element={<NotFound />} />
+    </Routes>
   );
 }
 
