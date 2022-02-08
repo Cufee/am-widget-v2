@@ -1,10 +1,10 @@
-import ApiResponse from "./types/ApiResponse";
+import Stats from "./types/Stats";
 
 export default async function getStatsBySettingsId(
   settingsId: string
-): Promise<ApiResponse> {
+): Promise<Stats> {
   if (!settingsId) {
-    return {} as ApiResponse;
+    return {} as Stats;
   }
   try {
     const response = await fetch(
@@ -14,6 +14,6 @@ export default async function getStatsBySettingsId(
     return json.data;
   } catch (error) {
     console.error(error);
-    return {} as ApiResponse;
+    return {} as Stats;
   }
 }

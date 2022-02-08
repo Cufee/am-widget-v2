@@ -1,9 +1,9 @@
 // Libraries
 import styled from "styled-components";
 // Libraries - Types
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 // Types
-import StatsResponse from "../../api/stats/types/ApiResponse";
+import Stats from "../../api/stats/types/Stats";
 // Hooks
 import { useDetectHeadless } from "../../hooks/useDetectHeadless/useDetectHeadless";
 // Components
@@ -13,6 +13,7 @@ import ApplyPreset from "../core/ApplyPreset/ApplyPreset";
 // Api
 import getStatsBySettingsId from "../../api/stats/getStatsBySettingsId";
 import HeadlessProps from "./core/types/HeadlessProps";
+import { SettingsContext } from "../../contexts/SettingsContext/SettingsContext";
 
 interface HeadlessStyleProps {
   backgroundImage?: string;
@@ -44,19 +45,21 @@ const WidgetStyledDiv = styled.div<HeadlessStyleProps>`
   `}
 `;
 
-function Widget({ settingsId, style }: HeadlessProps) {
+function Widget({ style }: HeadlessProps) {
+  const { id } = useContext(SettingsContext);
+
   const headless = useDetectHeadless();
 
-  const [statsData, setStatsData] = useState<StatsResponse | null>(null);
+  const [statsData, setStatsData] = useState<Stats | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     setIsLoading(true);
-    getStatsBySettingsId(settingsId).then((response) => {
+    getStatsBySettingsId(id).then((response) => {
       setStatsData(response);
       setIsLoading(false);
     });
-  }, [settingsId]);
+  }, [id]);
 
   if (isLoading) return <Loading />;
   if (!statsData || !statsData.cards) {
@@ -80,7 +83,7 @@ function Widget({ settingsId, style }: HeadlessProps) {
       withBackground={style.withBackground}
       headless={headless}
     >
-      {ApplyPreset({ name: statsData.styleProfile || "" })({
+      {ApplyPreset({ name: statsData.stylePreset || "" })({
         cards: statsData.cards,
       })}
     </WidgetStyledDiv>

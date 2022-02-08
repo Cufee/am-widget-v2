@@ -1,5 +1,4 @@
 type WidgetProps = {
-  settingsId: string;
   style: {
     withBackground?: boolean;
     backgroundImage?: string;

@@ -1,10 +1,9 @@
 import Widget from "../Widget/Widget";
 
 function Headless() {
-  const settingsId = "headless";
   return (
     <div className="self-start">
-      <Widget settingsId={settingsId} style={{ withBackground: false }} />
+      <Widget style={{ withBackground: false }} />
     </div>
   );
 }

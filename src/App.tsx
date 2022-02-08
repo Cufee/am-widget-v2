@@ -3,7 +3,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 // Hooks
 import { useDetectHeadless } from "./components/hooks/useDetectHeadless/useDetectHeadless";
 // Contexts
-import { SettingsIdWrapper } from "./components/contexts/SettingsIdContext/SettingsIdContext";
+import { SettingsContextWrapper } from "./components/contexts/SettingsContext/SettingsContext";
 // Components
 import Footer from "./components/core/Footer/Footer";
 import Navbar from "./components/core/Navbar/Navbar";
@@ -14,13 +14,13 @@ import PageContainer from "./components/core/PageContainer/PageContainer";
 
 function App() {
   return (
-    <div className="flex flex-col justify-center items-center relative">
-      <SettingsIdWrapper>
-        <BrowserRouter>
+    <BrowserRouter>
+      <SettingsContextWrapper>
+        <div className="flex flex-col justify-center items-center relative">
           <PageWrapper />
-        </BrowserRouter>
-      </SettingsIdWrapper>
-    </div>
+        </div>
+      </SettingsContextWrapper>
+    </BrowserRouter>
   );
 }
 

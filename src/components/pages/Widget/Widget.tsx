@@ -2,18 +2,16 @@
 import styled from "styled-components";
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
-// Types
-import SettingsInterface from "../../Widget/Settings/core/types/SettingsInterface";
+// Hooks
+import { useDetectHeadless } from "../../hooks/useDetectHeadless/useDetectHeadless";
 // Components
 import Button from "../../core/Button/Button";
 import Preview from "../../Widget/Preview/Preview";
 import Settings from "../../Widget/Settings/Settings";
-import { useDetectHeadless } from "../../hooks/useDetectHeadless/useDetectHeadless";
 import Headless from "../../Widget/Headless/Headless";
 
 function WidgetSettings() {
   const location = useLocation();
-
   // Determine if the app is open in OBS
   const [pageHref, setPageHref] = useState(location.pathname);
   useEffect(() => {
@@ -26,10 +24,6 @@ function WidgetSettings() {
     );
   }, [location.pathname, location.search]);
 
-  const [settings, setSettings] = useState<SettingsInterface>(
-    {} as SettingsInterface
-  );
-
   // Page opened in OBS
   const headless = useDetectHeadless();
   if (headless) return <Headless />;
@@ -38,13 +32,10 @@ function WidgetSettings() {
     <div className="flex flex-col gap-4">
       <WidgetSettingsDiv className="flex flex-col lg:flex-row gap-4 justify-center">
         <div className="rounded-xl w-full bg-base-dark">
-          <Settings settings={settings} setSettings={setSettings} />
+          <Settings />
         </div>
         <div className="rounded-xl w-full bg-base-dark">
-          <Preview
-            settingsId={settings.settingsId}
-            style={{ withBackground: false }}
-          />
+          <Preview style={{ withBackground: false }} />
         </div>
       </WidgetSettingsDiv>
       <div className="bg-base-dark rounded-xl p-4">
