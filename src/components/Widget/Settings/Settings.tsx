@@ -1,5 +1,6 @@
 // Libraries
 import { useContext, useEffect, useState } from "react";
+import { merge } from "lodash";
 // Types
 import { GenerateSettings } from "../../api/settings/types/GenerateSettings";
 // Contexts
@@ -7,34 +8,43 @@ import { SettingsContext } from "../../contexts/SettingsContext/SettingsContext"
 // Components
 import Button from "../../core/Button/Button";
 
+type RecursivePartial<T> = {
+  [P in keyof T]?: RecursivePartial<T[P]>;
+};
+
 function SettingsContainer() {
-  const { settings, setSettings } = useContext(SettingsContext);
+  const { settings, updateSettings } = useContext(SettingsContext);
   const [settingsChanged, setSettingsChanged] =
-    useState<GenerateSettings>(settings);
+    useState<GenerateSettings | null>(settings);
+
   useEffect(() => {
     setSettingsChanged(settings);
   }, [settings]);
 
-  const setSettingsKey = (update: Partial<GenerateSettings>) => {
-    setSettingsChanged({ ...settingsChanged, ...update });
+  const setSettingsKey = (update: RecursivePartial<GenerateSettings>) => {
+    const newState = merge({}, settingsChanged, update) as GenerateSettings;
+    setSettingsChanged(newState);
   };
 
   const onSave = () => {
-    if (settingsChanged !== settings) {
-      setSettings(settingsChanged);
+    if (settingsChanged) {
+      console.log(settings);
+      updateSettings(merge(settings, settingsChanged));
     }
   };
 
   const setRealm = (realm: string) => {
     setSettingsKey({
-      player: { ...settingsChanged?.player, realm: realm.toUpperCase() },
+      player: {
+        realm: realm.toUpperCase(),
+      } as GenerateSettings["player"],
     });
   };
 
   const setLocale = (locale: string) => {
     setSettingsKey({
       locale: locale.toLowerCase(),
-      options: { ...settingsChanged?.options, locale: locale.toLowerCase() },
+      options: { locale: locale.toLowerCase() },
     });
   };
 

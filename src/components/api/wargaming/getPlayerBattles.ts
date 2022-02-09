@@ -1,11 +1,11 @@
-import { ApiResponse, PlayerBattles } from "./types/PlayerBattles";
+import { PlayerBattles } from "./types/PlayerBattles";
 
 export default async function getPlayerBattles(
   playerId: number,
   realm: string
 ): Promise<PlayerBattles> {
   if (!playerId) {
-    return {} as PlayerBattles;
+    return {} as PlayerBattles; // Need to update error state
   }
   try {
     const search = new URLSearchParams({
@@ -18,21 +18,23 @@ export default async function getPlayerBattles(
 
     const response = await fetch(
       `https://${getDomainFromRealm(realm)}/${
-        process.env.REACT_APP_WARGAMING_PATH
-      }/?${search.toString()}`,
-      {
-        mode: "no-cors",
-      }
+        process.env.REACT_APP_WARGAMING_BATTLES_PATH
+      }/?${search.toString()}`
     );
-    const json = (await response.json()) as ApiResponse;
+
+    const json = await response.json();
+
+    if (json.status !== "ok") {
+      return {} as PlayerBattles; // Need to update error state
+    }
     return {
-      random: json.data[playerId.toString()].statistics.all.battles,
-      rating: json.data[playerId.toString()].statistics.rating.battles,
-      lastBattleTime: json.data[playerId.toString()].last_battle_time,
+      random: json?.data[playerId.toString()]?.statistics?.all?.battles || 0,
+      rating: json?.data[playerId.toString()]?.statistics?.rating?.battles || 0,
+      lastBattleTime: json?.data[playerId.toString()]?.last_battle_time || 0,
     };
   } catch (error) {
     console.error(error);
-    return {} as PlayerBattles;
+    return {} as PlayerBattles; // Need to update error state
   }
 }
 

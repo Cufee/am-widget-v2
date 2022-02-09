@@ -7,7 +7,9 @@ import { StatsContext } from "../../contexts/StatsContext/StatsContext";
 
 export const useStatsRefresh = () => {
   const { settings, id } = useContext(SettingsContext);
-  const { setStats } = useContext(StatsContext);
+  const {
+    unsafe: { setStats },
+  } = useContext(StatsContext);
 
   const [lastBattles, setLastBattles] = useState<PlayerBattles>(
     {} as PlayerBattles

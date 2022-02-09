@@ -17,13 +17,13 @@ import Headless from "./components/Widget/Headless/Headless";
 function App() {
   return (
     <BrowserRouter>
-      <StatsContextWrapper>
-        <SettingsContextWrapper>
+      <SettingsContextWrapper>
+        <StatsContextWrapper>
           <div className="flex flex-col justify-center items-center relative">
             <PageWrapper />
           </div>
-        </SettingsContextWrapper>
-      </StatsContextWrapper>
+        </StatsContextWrapper>
+      </SettingsContextWrapper>
     </BrowserRouter>
   );
 }

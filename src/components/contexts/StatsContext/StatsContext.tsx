@@ -1,23 +1,48 @@
-import { createContext, PropsWithChildren, useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
-import getSettingsById from "../../api/settings/getSettingsById";
-import newSettings from "../../api/settings/newSettings";
-import saveSettingsBuId from "../../api/settings/saveSettingsById";
-import { GenerateSettings } from "../../api/settings/types/GenerateSettings";
+import {
+  createContext,
+  PropsWithChildren,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
+import getStatsBySettingsId from "../../api/stats/getStatsBySettingsId";
 import Stats from "../../api/stats/types/Stats";
+import { SettingsContext } from "../SettingsContext/SettingsContext";
 
 interface StatsCtx {
   stats: Stats;
-  setStats: (stats: Stats) => void;
+  statsLoading: boolean;
+  unsafe: {
+    setStats: (stats: Stats) => void;
+  };
 }
 
 export const StatsContext = createContext({} as StatsCtx);
 
 export const StatsContextWrapper = ({ children }: PropsWithChildren<{}>) => {
-  const [stats, setStats] = useState({} as Stats);
+  const { settings, id } = useContext(SettingsContext);
+
+  const [stats, unsafeSetStats] = useState({} as Stats);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    setLoading(true);
+    getStatsBySettingsId(id).then((response) => {
+      if (response) {
+        unsafeSetStats(response);
+      }
+      setLoading(false);
+    });
+  }, [id, settings]);
 
   return (
-    <StatsContext.Provider value={{ stats, setStats }}>
+    <StatsContext.Provider
+      value={{
+        stats,
+        statsLoading: loading,
+        unsafe: { setStats: unsafeSetStats },
+      }}
+    >
       {children}
     </StatsContext.Provider>
   );
