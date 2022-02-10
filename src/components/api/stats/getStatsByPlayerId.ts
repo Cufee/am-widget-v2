@@ -1,18 +1,25 @@
-import Stats from "./types/Stats";
+import { ApiResponse } from "../core/types/ApiResponse";
 
 export default async function getStatsByPlayerId(
-  settingsId: string,
   playerID: string,
   realm: string,
-  locale: string = "en_US"
-): Promise<Stats> {
-  if (!settingsId || !playerID || !realm) {
-    return {} as Stats;
+  locale: string = "en"
+): Promise<ApiResponse> {
+  if (!playerID || !realm) {
+    return {
+      error: {
+        message: "Settings ID, player ID and realm are required",
+      },
+    };
   }
 
   const playerIDNumber = Number(playerID);
   if (isNaN(playerIDNumber)) {
-    return {} as Stats;
+    return {
+      error: {
+        message: "Player ID must be a number",
+      },
+    };
   }
 
   const response = await fetch(`${process.env.REACT_APP_BACKEND_URI}/stats`, {
@@ -22,12 +29,10 @@ export default async function getStatsByPlayerId(
     },
     body: JSON.stringify({
       player_id: playerIDNumber,
-      settings_id: settingsId,
       locale,
       realm,
     }),
   });
 
-  const json = await response.json();
-  return json.data;
+  return await response.json();
 }

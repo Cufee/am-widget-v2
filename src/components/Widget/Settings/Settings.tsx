@@ -28,7 +28,6 @@ function SettingsContainer() {
 
   const onSave = () => {
     if (settingsChanged) {
-      console.log(settings);
       updateSettings(merge(settings, settingsChanged));
     }
   };

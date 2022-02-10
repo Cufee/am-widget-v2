@@ -59,5 +59,3 @@ function LinkTo({ children, to }: LinkProps) {
 }
 
 export default LinkTo;
-{
-}

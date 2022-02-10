@@ -5,7 +5,7 @@ export default async function saveSettingsBuId(
   settingsId: string
 ): Promise<GenerateSettings> {
   if (!settingsId || !settings) {
-    return {} as GenerateSettings;
+    throw new Error("Invalid settings or settings ID");
   }
 
   try {
@@ -23,6 +23,6 @@ export default async function saveSettingsBuId(
     return json.data;
   } catch (error) {
     console.error(error);
-    return {} as GenerateSettings;
+    throw new Error("Failed to save settings");
   }
 }

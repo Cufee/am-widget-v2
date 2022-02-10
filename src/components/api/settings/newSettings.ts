@@ -4,7 +4,7 @@ export default async function newSettings(
   settings: GenerateSettings
 ): Promise<string> {
   if (!settings) {
-    return "";
+    throw new Error("Invalid settings");
   }
   try {
     const response = await fetch(
@@ -21,6 +21,6 @@ export default async function newSettings(
     return json.data;
   } catch (error) {
     console.error(error);
-    return "";
+    throw new Error("Failed to save settings");
   }
 }

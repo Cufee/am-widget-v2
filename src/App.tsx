@@ -13,23 +13,30 @@ import NotFound from "./components/pages/NotFound/NotFound";
 import PageContainer from "./components/core/PageContainer/PageContainer";
 import { StatsContextWrapper } from "./components/contexts/StatsContext/StatsContext";
 import Headless from "./components/Widget/Headless/Headless";
+import { ToastProvider } from "./components/contexts/ToastContext/ToastContext";
+import ErrorBoundaryWrapper from "./components/core/ErrorBoundary/ErrorBoundary";
 
 function App() {
   return (
     <BrowserRouter>
-      <SettingsContextWrapper>
-        <StatsContextWrapper>
-          <div className="flex flex-col justify-center items-center relative">
-            <PageWrapper />
-          </div>
-        </StatsContextWrapper>
-      </SettingsContextWrapper>
+      <ToastProvider>
+        <ErrorBoundaryWrapper>
+          <SettingsContextWrapper>
+            <StatsContextWrapper>
+              <div className="flex flex-col justify-center items-center relative">
+                <PageWrapper />
+              </div>
+            </StatsContextWrapper>
+          </SettingsContextWrapper>
+        </ErrorBoundaryWrapper>
+      </ToastProvider>
     </BrowserRouter>
   );
 }
 
 function PageWrapper() {
   const headless = useDetectHeadless();
+
   if (headless) return <PageContent />;
   return (
     <PageContainer>

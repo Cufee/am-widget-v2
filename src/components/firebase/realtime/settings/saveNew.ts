@@ -6,8 +6,7 @@ export async function saveNew(
   settings: GenerateSettings
 ): Promise<string | null> {
   if (!settings?.player?.id || !settings?.player?.realm) {
-    // handler error
-    return null;
+    throw new Error("Invalid settings");
   }
 
   try {
@@ -18,7 +17,6 @@ export async function saveNew(
     await update(settingsDb, payload);
     return newID;
   } catch (error) {
-    // handler error
-    return null;
+    throw new Error("Failed to save settings");
   }
 }

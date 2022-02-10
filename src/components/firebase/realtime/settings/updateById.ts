@@ -7,9 +7,11 @@ export async function updateSettingsById(
   id: string,
   settings: GenerateSettings
 ): Promise<void> {
-  if (!id || !settings?.player?.id || !settings?.player?.realm) {
-    // handler error
-    return;
+  if (!id) {
+    throw new Error("Invalid ID");
+  }
+  if (!settings?.player?.id || !settings?.player?.realm) {
+    throw new Error("Invalid player ID or Realm");
   }
 
   const payload = {
@@ -19,7 +21,6 @@ export async function updateSettingsById(
   try {
     return update(settingsDb, payload);
   } catch (error) {
-    // handler error
-    return;
+    throw new Error("Failed to update settings");
   }
 }

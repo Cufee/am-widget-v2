@@ -1,9 +1,7 @@
 // Libraries
 import styled from "styled-components";
 // Libraries - Types
-import { useContext, useState } from "react";
-// Types
-import Stats from "../../api/stats/types/Stats";
+import { useContext } from "react";
 // Hooks
 import { useDetectHeadless } from "../../hooks/useDetectHeadless/useDetectHeadless";
 // Components
@@ -13,7 +11,6 @@ import ApplyPreset from "../core/ApplyPreset/ApplyPreset";
 // Api
 import HeadlessProps from "./core/types/HeadlessProps";
 import { StatsContext } from "../../contexts/StatsContext/StatsContext";
-import { useStatsRefresh } from "../../hooks/useStatsRefresh/useStatsRefresh";
 
 interface HeadlessStyleProps {
   backgroundImage?: string;
@@ -48,7 +45,6 @@ const WidgetStyledDiv = styled.div<HeadlessStyleProps>`
 function Widget({ style }: HeadlessProps) {
   const headless = useDetectHeadless();
   const { stats, statsLoading } = useContext(StatsContext);
-  const { lastBattles } = useStatsRefresh();
 
   if (statsLoading) return <Loading />;
   if (!stats || !stats.cards) {

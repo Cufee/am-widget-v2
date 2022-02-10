@@ -1,11 +1,15 @@
-import { PlayerBattles } from "./types/PlayerBattles";
+import { ApiResponse } from "../core/types/ApiResponse";
 
 export default async function getPlayerBattles(
   playerId: number,
   realm: string
-): Promise<PlayerBattles> {
+): Promise<ApiResponse> {
   if (!playerId) {
-    return {} as PlayerBattles; // Need to update error state
+    return {
+      error: {
+        message: "Player ID is required",
+      },
+    };
   }
   try {
     const search = new URLSearchParams({
@@ -25,16 +29,37 @@ export default async function getPlayerBattles(
     const json = await response.json();
 
     if (json.status !== "ok") {
-      return {} as PlayerBattles; // Need to update error state
+      return {
+        error: {
+          message: "Failed to get player battles",
+          context: json.error.message,
+        },
+      };
+    }
+    if (!json.data?.[playerId]) {
+      return {
+        error: {
+          message: "WarGaming API returned no data",
+          context: "Player ID not found",
+        },
+      };
     }
     return {
-      random: json?.data[playerId.toString()]?.statistics?.all?.battles || 0,
-      rating: json?.data[playerId.toString()]?.statistics?.rating?.battles || 0,
-      lastBattleTime: json?.data[playerId.toString()]?.last_battle_time || 0,
+      data: {
+        random: json?.data[playerId.toString()]?.statistics?.all?.battles || 0,
+        rating:
+          json?.data[playerId.toString()]?.statistics?.rating?.battles || 0,
+        lastBattleTime: json?.data[playerId.toString()]?.last_battle_time || 0,
+      },
     };
   } catch (error) {
     console.error(error);
-    return {} as PlayerBattles; // Need to update error state
+    return {
+      error: {
+        message: "Failed to get stats",
+        context: `${error}`,
+      },
+    };
   }
 }
 

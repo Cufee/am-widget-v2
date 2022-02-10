@@ -4,7 +4,7 @@ export default async function getSettingsById(
   settingsId: string
 ): Promise<GenerateSettings> {
   if (!settingsId) {
-    return {} as GenerateSettings;
+    throw new Error("Invalid settings ID");
   }
   try {
     const response = await fetch(
@@ -14,6 +14,6 @@ export default async function getSettingsById(
     return json.data;
   } catch (error) {
     console.error(error);
-    return {} as GenerateSettings;
+    throw new Error("Failed to get settings");
   }
 }

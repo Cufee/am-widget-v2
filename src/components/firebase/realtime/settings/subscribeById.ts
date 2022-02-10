@@ -10,18 +10,15 @@ export async function subscribeById(
   const pathRef = child(settingsDb, id);
 
   const unsubscribe = onValue(pathRef, (snapshot: DataSnapshot) => {
-    console.log("callback");
     if (snapshot.exists()) {
       return callback(snapshot.toJSON() as GenerateSettings | null);
     } else {
       callback(null); // reset state
       unsubscribe();
+      throw new Error("Failed to subscribe to settings");
     }
-
-    // generate error
   });
   return () => {
-    console.log("unsubscribe");
     unsubscribe();
   };
 }
