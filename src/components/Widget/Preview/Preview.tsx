@@ -10,7 +10,7 @@ function Preview({ style }: PreviewProps) {
       <div className="flex text-white opacity-40 text-xl justify-center m-4 mb-2 uppercase">
         Preview
       </div>
-      <div className="m-4 mt-0 h-full">
+      <div className="h-full">
         <ObsWindow>
           <Headless style={style} />
         </ObsWindow>

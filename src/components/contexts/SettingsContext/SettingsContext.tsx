@@ -1,15 +1,18 @@
-import { createContext, PropsWithChildren, useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
-import { omit, isEqual } from "lodash";
-import { GenerateSettings } from "../../api/settings/types/GenerateSettings";
-
 import { Unsubscribe } from "firebase/database";
-import { subscribeById } from "../../firebase/realtime/settings/subscribeById";
-
-import setSearchParams from "../../functions/setSearchParams";
-import { updateSettingsById } from "../../firebase/realtime/settings/updateById";
+import { isEqual, omit } from "lodash";
+import {
+  createContext,
+  PropsWithChildren,
+  useCallback,
+  useEffect,
+  useState,
+} from "react";
+import { useLocation } from "react-router-dom";
+import { GenerateSettings } from "../../api/settings/types/GenerateSettings";
 import { saveNew } from "../../firebase/realtime/settings/saveNew";
-import { useCallback } from "react";
+import { subscribeById } from "../../firebase/realtime/settings/subscribeById";
+import { updateSettingsById } from "../../firebase/realtime/settings/updateById";
+import setSearchParams from "../../functions/setSearchParams";
 import { useToast } from "../../hooks/useToast/useToast";
 
 interface SettingsCtx {
@@ -22,7 +25,7 @@ export const SettingsContext = createContext({} as SettingsCtx);
 const settingsIdQueryKey = "sid";
 
 export const SettingsContextWrapper = ({ children }: PropsWithChildren<{}>) => {
-  const { addToast } = useToast();
+  const { addToast, addFromError } = useToast();
 
   const [settingsId, setSettingsIdSimple] = useState("");
   const [settings, unsafeSetSettings] = useState<GenerateSettings | null>(null);
@@ -50,11 +53,22 @@ export const SettingsContextWrapper = ({ children }: PropsWithChildren<{}>) => {
         });
       });
     } else {
-      saveNew(updated).then((id) => {
-        if (id) {
-          setSettingsId(id);
-        }
-      });
+      saveNew(updated)
+        .then((id) => {
+          if (id) {
+            setSettingsId(id);
+          }
+        })
+        .catch((error) => {
+          addToast({
+            type: "error",
+            content: {
+              title: "Error",
+              message: "Could not save settings",
+              context: `${error.message}`,
+            },
+          });
+        });
     }
   };
 

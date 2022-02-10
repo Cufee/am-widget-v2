@@ -57,5 +57,6 @@ export interface VehiclesOptions {
 
 export interface Player {
   id: number;
+  name: string;
   realm: string;
 }

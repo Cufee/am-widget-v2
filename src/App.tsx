@@ -1,20 +1,16 @@
-// Libraries
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-// Hooks
-import { useDetectHeadless } from "./components/hooks/useDetectHeadless/useDetectHeadless";
-// Contexts
 import { SettingsContextWrapper } from "./components/contexts/SettingsContext/SettingsContext";
-// Components
-import Footer from "./components/core/Footer/Footer";
-import Navbar from "./components/core/Navbar/Navbar";
-import Widget from "./components/pages/Widget/Widget";
-import Landing from "./components/pages/Landing/Landing";
-import NotFound from "./components/pages/NotFound/NotFound";
-import PageContainer from "./components/core/PageContainer/PageContainer";
 import { StatsContextWrapper } from "./components/contexts/StatsContext/StatsContext";
-import Headless from "./components/Widget/Headless/Headless";
 import { ToastProvider } from "./components/contexts/ToastContext/ToastContext";
 import ErrorBoundaryWrapper from "./components/core/ErrorBoundary/ErrorBoundary";
+import Footer from "./components/core/Footer/Footer";
+import Navbar from "./components/core/Navbar/Navbar";
+import PageContainer from "./components/core/PageContainer/PageContainer";
+import { useDetectHeadless } from "./components/hooks/useDetectHeadless/useDetectHeadless";
+import Landing from "./components/pages/Landing/Landing";
+import NotFound from "./components/pages/NotFound/NotFound";
+import Widget from "./components/pages/Widget/Widget";
+import Headless from "./components/Widget/Headless/Headless";
 
 function App() {
   return (

@@ -12,6 +12,8 @@ import { usePlayerBattles } from "../../hooks/usePlayerBattles/usePlayerBattles"
 import { useToast } from "../../hooks/useToast/useToast";
 import { SettingsContext } from "../SettingsContext/SettingsContext";
 import { isEqual } from "lodash";
+import usePrevious from "../../hooks/usePrevious/usePrevious";
+import { PlayerBattles } from "../../api/wargaming/core/types/PlayerBattles";
 
 interface StatsCtx {
   stats: Stats;
@@ -33,8 +35,10 @@ export const StatsContextWrapper = ({ children }: PropsWithChildren<{}>) => {
 
   const { settings, id } = useContext(SettingsContext);
   const [stats, unsafeSetStats] = useState({} as Stats);
-  const [loading, setLoading] = useState(true);
+  const [initialLoadingDone, setInitialLoadingDone] = useState(false);
+  const [loading, setLoading] = useState(false);
   const playerBattles = usePlayerBattles();
+  const prevPlayerBattles = usePrevious<PlayerBattles>(playerBattles);
   const [errorState, setErrorState] = useState<ErrorState>({ status: false });
 
   useCallback(() => {
@@ -43,19 +47,37 @@ export const StatsContextWrapper = ({ children }: PropsWithChildren<{}>) => {
     }
   }, [settings, errorState, setErrorState]);
 
+  const refreshPlayerStats = async () => {
+    !initialLoadingDone && setLoading(true);
+    const res = await getStatsBySettingsId(id);
+    if (res.error) {
+      setErrorState({ status: true, state: settings });
+      addFromError(res.error);
+    } else {
+      unsafeSetStats(res.data);
+    }
+    setLoading(false);
+    setInitialLoadingDone(true);
+  };
+
+  // if the settings changed, we need to refresh the stats
   useEffect(() => {
-    if (!id || !settings?.player.id || errorState.state) return;
-    loading && setLoading(true);
-    getStatsBySettingsId(id).then((res) => {
-      if (res.error) {
-        setErrorState({ status: true, state: settings });
-        addFromError(res.error);
-      } else {
-        unsafeSetStats(res.data);
-      }
-      setLoading(false);
-    });
-  }, [id, settings, playerBattles.lastBattleTime, errorState]); // eslint-disable-line react-hooks/exhaustive-deps -- we only update on settings changes and last battle time changes
+    if (!id || !settings?.player.id || errorState.state) {
+      return;
+    }
+    refreshPlayerStats();
+  }, [id, settings, errorState.status]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  // if the player battles changed, we need to refresh the stats
+  useEffect(() => {
+    if (
+      !prevPlayerBattles?.lastBattleTime ||
+      playerBattles?.lastBattleTime <= stats.lastBattle
+    ) {
+      return;
+    }
+    refreshPlayerStats();
+  }, [playerBattles.lastBattleTime]); // eslint-disable-line react-hooks/exhaustive-deps -- errorState is already handled above
 
   return (
     <StatsContext.Provider

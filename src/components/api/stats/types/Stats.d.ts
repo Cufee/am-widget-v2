@@ -6,4 +6,5 @@ export default interface Stats {
   statusIcons?: BlockRowContent[];
   failedCards?: string[];
   stylePreset?: string;
+  lastBattle: int;
 }

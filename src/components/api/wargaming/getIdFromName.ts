@@ -1,29 +1,27 @@
 import { ApiResponse } from "../core/types/ApiResponse";
 import getDomainFromRealm from "./core/getDomainFromRealm";
 
-export default async function getPlayerBattles(
-  playerId: number,
+export default async function getIdFromName(
+  name: string,
   realm: string
 ): Promise<ApiResponse> {
-  if (!playerId) {
+  if (!name || !realm) {
     return {
       error: {
-        message: "Player ID is required",
+        message: "Player name and realm are required",
       },
     };
   }
   try {
     const search = new URLSearchParams({
-      fields:
-        "statistics.all.battles,statistics.rating.battles,last_battle_time",
       application_id: process.env.REACT_APP_WARGAMING_APP_ID || "",
-      account_id: playerId.toString(),
-      extra: "statistics.rating",
+      search: name,
+      limit: "1",
     });
 
     const response = await fetch(
       `https://${getDomainFromRealm(realm)}/${
-        process.env.REACT_APP_WARGAMING_BATTLES_PATH
+        process.env.REACT_APP_WARGAMING_INFO_PATH
       }/?${search.toString()}`
     );
 
@@ -32,26 +30,23 @@ export default async function getPlayerBattles(
     if (json.status !== "ok") {
       return {
         error: {
-          message: "Failed to get player battles",
+          message: "Failed to find a player by name",
           context: json.error.message,
         },
       };
     }
-    if (!json.data?.[playerId]) {
+    if (
+      !json.data?.[0]?.account_id ||
+      json.data?.[0]?.nickname?.toLocaleLowerCase() !== name.toLocaleLowerCase()
+    ) {
       return {
         error: {
-          context: "Player ID not found",
-          message: "Wargaming API returned no data",
+          message: "No player found with name " + name,
         },
       };
     }
     return {
-      data: {
-        random: json?.data[playerId.toString()]?.statistics?.all?.battles || 0,
-        rating:
-          json?.data[playerId.toString()]?.statistics?.rating?.battles || 0,
-        lastBattleTime: json?.data[playerId.toString()]?.last_battle_time || 0,
-      },
+      data: json.data[0].account_id,
     };
   } catch (error) {
     console.error(error);

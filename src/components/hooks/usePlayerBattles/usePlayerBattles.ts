@@ -1,6 +1,6 @@
 import { useCallback, useContext, useEffect, useState } from "react";
 import getPlayerBattles from "../../api/wargaming/getPlayerBattles";
-import { PlayerBattles } from "../../api/wargaming/types/PlayerBattles";
+import { PlayerBattles } from "../../api/wargaming/core/types/PlayerBattles";
 import { SettingsContext } from "../../contexts/SettingsContext/SettingsContext";
 import { useToast } from "../useToast/useToast";
 import { isEqual } from "lodash";
@@ -44,6 +44,12 @@ export const usePlayerBattles = () => {
       }
     }, 3000);
     return () => clearInterval(interval);
-  }, [lastBattles.random, lastBattles.rating, addFromError, settings]);
+  }, [
+    lastBattles.random,
+    lastBattles.rating,
+    addFromError,
+    settings,
+    errorState.status,
+  ]);
   return lastBattles;
 };

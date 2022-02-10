@@ -9,6 +9,7 @@ import Button from "../../core/Button/Button";
 import Preview from "../../Widget/Preview/Preview";
 import Settings from "../../Widget/Settings/Settings";
 import Headless from "../../Widget/Headless/Headless";
+import CardContainer from "../../core/Card/Container/CardContainer";
 
 function WidgetSettings() {
   const location = useLocation();
@@ -31,21 +32,23 @@ function WidgetSettings() {
   return (
     <div className="flex flex-col gap-4">
       <WidgetSettingsDiv className="flex flex-col lg:flex-row gap-4 justify-center">
-        <div className="rounded-xl w-full bg-base-dark">
+        <CardContainer>
           <Settings />
-        </div>
-        <div className="rounded-xl w-full bg-base-dark">
+        </CardContainer>
+
+        <CardContainer>
           <Preview style={{ withBackground: false }} />
-        </div>
+        </CardContainer>
       </WidgetSettingsDiv>
-      <div className="bg-base-dark rounded-xl p-4">
+
+      <CardContainer>
         <div className="flex flex-row gap-2">
           <Button>Copy</Button>
           <div className="flex items-center bg-base-light w-full rounded-md px-4 py-2 h-full justify-center text-gray-400">
             {pageHref}
           </div>
         </div>
-      </div>
+      </CardContainer>
     </div>
   );
 }
