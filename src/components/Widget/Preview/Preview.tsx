@@ -7,7 +7,7 @@ interface PreviewProps extends HeadlessProps {}
 function Preview({ style }: PreviewProps) {
   return (
     <div className="flex flex-col w-full">
-      <div className="flex text-white opacity-40 text-xl justify-center m-4 mb-2 uppercase">
+      <div className="flex text-white opacity-40 text-xl justify-center mb-2 uppercase">
         Preview
       </div>
       <div className="h-full">

@@ -1,6 +1,5 @@
 // Libraries
 import { useContext, useEffect, useState } from "react";
-import tw from "tailwind-styled-components";
 import { merge } from "lodash";
 // Types
 import { GenerateSettings } from "../../api/settings/types/GenerateSettings";
@@ -18,6 +17,7 @@ import {
   localeOptions,
   realmOptions,
 } from "./core/constants/settings";
+import Lock from "../../core/Icons/Lock/Lock";
 
 type RecursivePartial<T> = {
   [P in keyof T]?: RecursivePartial<T[P]>;
@@ -137,6 +137,15 @@ function SettingsContainer() {
         >
           Style
         </SelectInput>
+      </div>
+
+      <div className="pt-0 flex gap-2">
+        <Button
+          classes={["flex", "flex-row", "gap-2"]}
+          passThroughProps={{ disabled: true }}
+        >
+          Customize <Lock size="1.5em" />
+        </Button>
       </div>
 
       <div className="flex justify-center flex-grow items-end">

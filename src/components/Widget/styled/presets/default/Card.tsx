@@ -18,7 +18,7 @@ function CardStyled({ card }: { card: Card }) {
   return (
     <CardDiv
       tags={card.tags}
-      className="flex flex-col w-full"
+      className="flex flex-col"
       data-element="CardStyled"
     >
       {card.rows.map((row) => {
@@ -40,7 +40,7 @@ const CardRowDiv = styled.div`
 function CardRowStyled({ row }: { row: CardRow }) {
   return (
     <CardRowDiv
-      className="flex flex-row w-full gap-4 px-4"
+      className="flex flex-row gap-4 px-4"
       data-element="CardRowStyled"
     >
       {row.blocks.map((block) => {

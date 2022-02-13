@@ -43,6 +43,7 @@ export const StatsContextWrapper = ({ children }: PropsWithChildren<{}>) => {
 
   useCallback(() => {
     if (!isEqual(settings, errorState.state) && errorState.status) {
+      console.debug("[StatsContext] Error state changed, resetting to false");
       setErrorState({ status: false });
     }
   }, [settings, errorState, setErrorState]);
@@ -51,9 +52,14 @@ export const StatsContextWrapper = ({ children }: PropsWithChildren<{}>) => {
     !initialLoadingDone && setLoading(true);
     const res = await getStatsBySettingsId(id);
     if (res.error) {
+      console.debug(
+        "[StatsContext] Error loading stats",
+        JSON.stringify(res.error)
+      );
       setErrorState({ status: true, state: settings });
       addFromError(res.error);
     } else {
+      console.debug("[StatsContext] Stats loaded");
       unsafeSetStats(res.data);
     }
     setLoading(false);
@@ -65,6 +71,7 @@ export const StatsContextWrapper = ({ children }: PropsWithChildren<{}>) => {
     if (!id || !settings?.player.id || errorState.state) {
       return;
     }
+    console.debug("[StatsContext] Settings changed, refreshing stats");
     refreshPlayerStats();
   }, [id, settings, errorState.status]); // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -76,6 +83,7 @@ export const StatsContextWrapper = ({ children }: PropsWithChildren<{}>) => {
     ) {
       return;
     }
+    console.debug("[StatsContext] Player battles changed, refreshing stats");
     refreshPlayerStats();
   }, [playerBattles.lastBattleTime]); // eslint-disable-line react-hooks/exhaustive-deps -- errorState is already handled above
 

@@ -6,7 +6,9 @@ import ErrorBoundaryWrapper from "./components/core/ErrorBoundary/ErrorBoundary"
 import Footer from "./components/core/Footer/Footer";
 import Navbar from "./components/core/Navbar/Navbar";
 import PageContainer from "./components/core/PageContainer/PageContainer";
+import overwriteConsole from "./components/functions/overwriteConsole";
 import { useDetectHeadless } from "./components/hooks/useDetectHeadless/useDetectHeadless";
+import Demo from "./components/pages/Demo/Demo";
 import Landing from "./components/pages/Landing/Landing";
 import NotFound from "./components/pages/NotFound/NotFound";
 import Widget from "./components/pages/Widget/Widget";
@@ -31,8 +33,9 @@ function App() {
 }
 
 function PageWrapper() {
-  const headless = useDetectHeadless();
+  process.env.NODE_ENV === "production" && overwriteConsole(); // Overwrite console.log()
 
+  const headless = useDetectHeadless();
   if (headless) return <PageContent />;
   return (
     <PageContainer>
@@ -49,6 +52,7 @@ function PageContent() {
       <Route path="/" element={<Landing />} />
       <Route path="/widget" element={<Widget />} />
       <Route path="/widget/headless" element={<Headless />} />
+      <Route path="/d" element={<Demo />} />
       <Route path="*" element={<NotFound />} />
     </Routes>
   );

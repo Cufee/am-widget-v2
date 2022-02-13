@@ -10,6 +10,7 @@ import Preview from "../../Widget/Preview/Preview";
 import Settings from "../../Widget/Settings/Settings";
 import Headless from "../../Widget/Headless/Headless";
 import CardContainer from "../../core/Card/Container/CardContainer";
+import Customize from "../../Widget/Customize/Customize";
 
 function WidgetSettings() {
   const location = useLocation();
@@ -40,6 +41,10 @@ function WidgetSettings() {
           <Preview style={{ withBackground: false }} />
         </CardContainer>
       </WidgetSettingsDiv>
+
+      <CardContainer>
+        <Customize />
+      </CardContainer>
 
       <CardContainer>
         <div className="flex flex-row gap-2">

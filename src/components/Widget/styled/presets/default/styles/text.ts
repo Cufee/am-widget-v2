@@ -24,6 +24,5 @@ export const textMediumStyle: CSSObject = {
 
 export const textSmallStyle: CSSObject = {
   lineHeight: "0.8rem",
-  fontSize: "0.8rem",
   color: "rgba(140, 140, 140, 1)",
 };

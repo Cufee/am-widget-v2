@@ -19,7 +19,7 @@ function CardStyled({ card }: { card: Card }) {
   return (
     <CardDiv
       tags={card.tags}
-      className="flex flex-col w-full"
+      className="flex flex-col w-full gap-1"
       data-element="CardStyled"
     >
       {card.rows.map((row: CardRow) => {
@@ -49,7 +49,11 @@ function CardRowStyled({ row }: { row: CardRow }) {
       data-element="CardRowStyled"
     >
       {row.blocks.map((block, i) => {
-        if (middle.includes(i)) {
+        if (
+          row.blocks.length > 2 &&
+          middle.includes(i) &&
+          !block.tags.includes("label")
+        ) {
           if (!block.tags) block.tags = [];
           block.tags.push("highlight");
         }

@@ -1,12 +1,13 @@
-import { PropsWithChildren, useState } from "react";
+import { omit } from "lodash";
+import { PropsWithChildren } from "react";
+import tw from "tailwind-styled-components";
 import InputProps from "../types/InputProps";
 import SelectOption from "../types/SelectOption";
 import InputContainer from "./InputContainer";
-import tw from "tailwind-styled-components";
-import { omit } from "lodash";
 
 interface SelectInterfaceProps extends InputProps {
   options: SelectOption[];
+  placeholder?: string;
   onChange: (text: string) => void;
 }
 
@@ -17,7 +18,6 @@ bg-base-light
   flex
   flex-grow
   outline-none
-  
 `;
 
 function SelectInput(props: PropsWithChildren<SelectInterfaceProps>) {
@@ -34,7 +34,7 @@ function SelectInput(props: PropsWithChildren<SelectInterfaceProps>) {
       )}
       <Select onChange={onChange} value={props.value}>
         <option value="" disabled hidden>
-          Select an Option
+          {props.placeholder || "Select an Option"}
         </option>
         {props.options.map((option, index) => {
           return (

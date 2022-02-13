@@ -9,7 +9,7 @@ const Container = tw.div<InputProps>`
   ${(p) => {
     if (p.required) {
       return p.value
-        ? "border-b-2 border-green-400"
+        ? "border-b-2 border-gray-600"
         : "border-b-2 border-red-400";
     }
   }}

@@ -6,6 +6,9 @@ import {
   ImageContent,
   TextContent,
 } from "../types/BlockRowContent";
+import DoubleArrowUp from "../../../core/Icons/Arrow/DoubleArrowUp";
+import DoubleArrowDown from "../../../core/Icons/Arrow/DoubleArrowDown";
+import Line from "../../../core/Icons/Line/Line";
 
 export const contentTypeText = "text";
 export const contentTypeIcon = "icon";
@@ -30,7 +33,7 @@ function CardBlockContent({ content }: { content: BlockRowContent }) {
 // Text
 function TextContentElement({ content }: { content: BlockRowContent }) {
   let body = content.content as TextContent;
-  return <span>{body}</span>;
+  return <>{body}</>;
 }
 
 // Icon
@@ -40,17 +43,26 @@ function getIconByName(body: IconContent) {
       return (
         <Circle
           color={body.color || "white"}
-          size={body.size ? body.size + "px" : "0.75em"}
+          size={body.size ? body.size + "px" : "0.6em"}
+        />
+      );
+    case "arrowUp":
+      return (
+        <DoubleArrowUp
+          color={body.color || "white"}
+          size={body.size ? body.size + "px" : "0.5em"}
+        />
+      );
+    case "arrowDown":
+      return (
+        <DoubleArrowDown
+          color={body.color || "white"}
+          size={body.size ? body.size + "px" : "0.5em"}
         />
       );
 
     default:
-      return (
-        <Circle
-          color={body.color || "white"}
-          size={body.size ? body.size + "px" : "0.75em"}
-        />
-      );
+      return <div></div>;
   }
 }
 function IconContentElement({ content }: { content: BlockRowContent }) {

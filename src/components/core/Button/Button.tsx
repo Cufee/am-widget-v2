@@ -1,13 +1,20 @@
 import { PropsWithChildren } from "react";
 
 function Button({
-  children,
   passThroughProps,
+  children,
+  classes,
   onClick,
-}: PropsWithChildren<{ passThroughProps?: any; onClick?: () => void }>) {
+}: PropsWithChildren<{
+  passThroughProps?: any;
+  onClick?: () => void;
+  classes?: string[];
+}>) {
   return (
     <button
-      className={`bg-primary text-white font-bold py-2 px-4 rounded cursor-pointer ${
+      className={`${classes?.join(
+        " "
+      )} bg-primary text-white font-bold py-2 px-4 rounded cursor-pointer ${
         !passThroughProps?.disabled
           ? "hover:bg-primary-hover"
           : "bg-primary-hover cursor-not-allowed"

@@ -25,7 +25,7 @@ export const SettingsContext = createContext({} as SettingsCtx);
 const settingsIdQueryKey = "sid";
 
 export const SettingsContextWrapper = ({ children }: PropsWithChildren<{}>) => {
-  const { addToast, addFromError } = useToast();
+  const { addFromError } = useToast();
 
   const [settingsId, setSettingsIdSimple] = useState("");
   const [settings, unsafeSetSettings] = useState<GenerateSettings | null>(null);
@@ -43,13 +43,9 @@ export const SettingsContextWrapper = ({ children }: PropsWithChildren<{}>) => {
     if (settingsId) {
       updateSettingsById(settingsId, updated).catch((error) => {
         setSettingsIdSimple("");
-        addToast({
-          type: "error",
-          content: {
-            title: "Error",
-            message: "Could not update settings",
-            context: `${error.message}`,
-          },
+        addFromError({
+          message: "Could not update settings",
+          context: `${error.message}`,
         });
       });
     } else {
@@ -60,13 +56,9 @@ export const SettingsContextWrapper = ({ children }: PropsWithChildren<{}>) => {
           }
         })
         .catch((error) => {
-          addToast({
-            type: "error",
-            content: {
-              title: "Error",
-              message: "Could not save settings",
-              context: `${error.message}`,
-            },
+          addFromError({
+            message: "Could not save settings",
+            context: `${error.message}`,
           });
         });
     }

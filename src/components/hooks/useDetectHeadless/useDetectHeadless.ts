@@ -7,7 +7,10 @@ export const useDetectHeadless = () => {
   useEffect(() => {
     const search = new URLSearchParams(location.search);
     const isOBSQuery = search.get("headless") === "true";
-    if (navigator.userAgent.includes("OBS/") || isOBSQuery) setHeadless(true);
+    if (navigator?.userAgent?.includes("OBS/") || isOBSQuery) {
+      console.debug("OBS detected, setting headless mode");
+      setHeadless(true);
+    }
   }, [location.search]);
 
   return headless;

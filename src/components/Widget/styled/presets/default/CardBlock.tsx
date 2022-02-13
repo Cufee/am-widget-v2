@@ -45,10 +45,11 @@ const ContentDiv = styled.div<PropsWithTags>`
 
 function BlockRowStyled({ row }: { row: BlockRow }) {
   return (
-    <BlockRowDiv className="flex flex-row w-full" data-element="BlockRowStyled">
+    <BlockRowDiv className="flex flex-row" data-element="BlockRowStyled">
       {row.content.map((content) => {
         return (
           <ContentDiv
+            className="flex justify-center items-center"
             tags={content.tags}
             data-element="BlockRowStyled-content"
             key={`card-row-block-row-content-${Date.now()}-${

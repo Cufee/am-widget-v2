@@ -22,29 +22,33 @@ interface HeadlessStyleProps {
 const WidgetStyledDiv = styled.div<HeadlessStyleProps>`
   max-width: fit-content;
   user-select: none;
-
   ${(p) =>
     p.backgroundImage &&
     p.withBackground &&
-    !p.headless &&
     `
-    background-image: ${p.backgroundImage};
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: cover;
-
-
-    background-color: rgba(255, 255, 255, .5);
-    -webkit-backdrop-filter: blur(10em);
-    backdrop-filter: blur(10em);
-    
-    padding: 4rem;
+  padding: 1em;
+  backdrop-filter: blur(2em);
+  `}
+`;
+const WithBackground = styled(WidgetStyledDiv)`
+  ${(p) =>
+    p.backgroundImage &&
+    p.withBackground &&
+    `
+  background-image: url(${p.backgroundImage});
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  padding: 0
   `}
 `;
 
 function Widget({ style }: HeadlessProps) {
   const headless = useDetectHeadless();
   const { stats, statsLoading } = useContext(StatsContext);
+
+  const tmlBgImage =
+    "https://images.unsplash.com/photo-1612151855475-877969f4a6cc?w=400";
 
   if (statsLoading) return <Loading />;
   if (!stats || !stats.cards) {
@@ -63,15 +67,21 @@ function Widget({ style }: HeadlessProps) {
     );
   }
   return (
-    <WidgetStyledDiv
-      backgroundImage={style.backgroundImage}
+    <WithBackground
+      backgroundImage={tmlBgImage}
       withBackground={style.withBackground}
-      headless={headless}
+      id="capture"
     >
-      {ApplyPreset({ name: stats.stylePreset || "" })({
-        cards: stats.cards,
-      })}
-    </WidgetStyledDiv>
+      <WidgetStyledDiv
+        backgroundImage={tmlBgImage}
+        withBackground={style.withBackground}
+        headless={headless}
+      >
+        {ApplyPreset({ name: stats.stylePreset || "" })({
+          cards: stats.cards,
+        })}
+      </WidgetStyledDiv>
+    </WithBackground>
   );
 }
 

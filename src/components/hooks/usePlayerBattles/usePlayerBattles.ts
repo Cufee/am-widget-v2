@@ -38,7 +38,12 @@ export const usePlayerBattles = () => {
               setErrorState({ status: true, state: settings });
               return addFromError(res.error);
             }
-            setLastBattles(res.data);
+            if (
+              (res.data as PlayerBattles)?.lastBattleTime !==
+              lastBattles?.lastBattleTime
+            ) {
+              setLastBattles(res.data);
+            }
           }
         );
       }

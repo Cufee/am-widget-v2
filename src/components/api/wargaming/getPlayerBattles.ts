@@ -6,6 +6,7 @@ export default async function getPlayerBattles(
   realm: string
 ): Promise<ApiResponse> {
   if (!playerId) {
+    console.debug("getPlayerBattles: playerId is empty");
     return {
       error: {
         message: "Player ID is required",
@@ -28,6 +29,7 @@ export default async function getPlayerBattles(
     );
 
     const json = await response.json();
+    console.debug(`getPlayerBattles: response=${JSON.stringify(json)}`);
 
     if (json.status !== "ok") {
       return {
@@ -54,7 +56,7 @@ export default async function getPlayerBattles(
       },
     };
   } catch (error) {
-    console.error(error);
+    console.debug(`getPlayerBattles: error=${JSON.stringify(error)}`);
     return {
       error: {
         message: "Failed to reach Wargaming API",
